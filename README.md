@@ -1,43 +1,38 @@
 # Intel RealSense Gazebo ROS plugin
 
-This package is a Gazebo ROS plugin for the Intel D435 realsense camera.
+This package is a Gazebo ROS plugin for the Intel D435 realsense camera, tested on ROS Noetic and Gazebo 11. 
  
 ## Acknowledgement
 
-This is a continuation of work done by [SyrianSpock](https://github.com/SyrianSpock) for a Gazebo ROS plugin with RS200 camera.
-
-This package also includes the work developed by Intel Corporation with the ROS model fo the [D435](https://github.com/intel-ros/realsense) camera.
+This package is forked from [realsense_gazebo_plugin](https://github.com/pal-robotics/realsense_gazebo_plugin) and integrates the urdf/ launch files from [realsense-ros-gazebo](https://github.com/rickstaa/realsense-ros-gazebo) and fix from 
 
 
-## Quick start (Credit to [PR](https://github.com/pal-robotics/realsense_gazebo_plugin/pull/43/files))
+## Installation
 
-Here we provide an exmaple of using this plugin with realsense D435 camera.
+You should have ROS Noetic, gazebo_ros (Gazebo 11), and realsense ROS packages already installed. For example, with [Robostack](https://robostack.github.io/index.html) a ROS environment integrated with Conda, you can install the dependencies with:
 
-First compile the package.
+```bash
+# Install gazebo_ros_pkgs
+mamba install ros-noetic-gazebo-ros ros-noetic-gazebo-ros-pkgs
 
-You need to get ```_d435.urdf.xacro```, ```_d435.gazebo.xacro```, and ```test_d435_camera.urdf.xacro``` from [realsense2_description/urdf](https://github.com/pal-robotics-forks/realsense/tree/upstream/realsense2_description/urdf) (Already downloaded in this package.)
-
-Now do the following modifications:
-
-1. For ```test_d435_camera.urdf.xacro```, modify line 3 (directory for _d435.urdf.xacro) according to your directory.
-2. For ```_d435.urdf.xacro```, modify line 13 (directory for _d435.gazebo.xacro) according to your directory.
-3. If you **DO NOT** have [realsense-ros](https://github.com/IntelRealSense/realsense-ros) installed, in ```_d435.urdf.xacro```, you can uncomment line 61 and comment line 62 in _d435.urdf.xacro to get rid of the mesh usage from realsense-ros. <br>
-_Note: if you used apt-get to install the realsense-ros, you also need to install ros-$ROS_DISTRO-realsense2-description separately to get the mesh._
-
-Now launch the terminal **in the directory where you put these .xacro files**.
-
-```
-rosrun xacro xacro test_d435_camera.urdf.xacro > test_d435_camera.urdf
-rosrun gazebo_ros gazebo
-// make sure you have the right directory for "rosrun gazebo_ros gazebo"! Or it may not be working.
+# Install realsense ROS packages
+mamba install ros-noetic-realsense2-camera ros-noetic-realsense2-description ros-noetic-librealsense2
 ```
 
-And in another terminal:
+Then, clone this repository into your catkin workspace and build it with `catkin build`:
 
+```bash
+cd /path/to/catkin_ws/src
+git clone git@github.com:SgtVincent/realsense_gazebo_plugin.git
+cd ..
+catkin build realsense_gazebo_plugin
 ```
-rosrun spawn_model -urdf -file test_d435_camera.urdf -model realsense2_camera
+
+## Usage
+
+There are example lauch files in the `launch` folder. You can run them with:
+
+```bash
+source devel/setup.bash
+roslaunch realsense_gazebo_plugin view_d435_model_rviz_gazebo.launch 
 ```
-
-Gazebo should be running with a d435 camera (tested on noetic and melodic).
-
-For adding the camera to your .urdf / .xacro file, please look into ```test_d435_camera.urdf.xacro``` and ```test_d435_camera.urdf```.
