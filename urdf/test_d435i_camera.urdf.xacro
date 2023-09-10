@@ -5,7 +5,7 @@
   <xacro:arg name="use_nominal_extrinsics" default="false" />
   <xacro:arg name="publish_pointcloud" default="false" />
   <xacro:arg name="add_plug" default="false" />
-  <xacro:include filename="$(find realsense2_description)/urdf/_d435i.urdf.xacro"/>
+  <xacro:include filename="$(find realsense_gazebo_plugin)/urdf/_d435i.urdf.xacro"/>
 
   <link name="base_link" />
   <xacro:sensor_d435i name="$(arg name)" topics_ns="$(arg topics_ns)" parent="base_link" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" publish_pointcloud="$(arg publish_pointcloud)" add_plug="$(arg add_plug)">
