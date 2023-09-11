@@ -5,6 +5,7 @@
   <arg name="add_plug" default="false"/>
   <arg name="publish_pointcloud" default="true"/>
   <arg name="model" default="$(find realsense_gazebo_plugin)/urdf/test_d435_camera.urdf.xacro"/>
+  
   <param name="robot_description" command="$(find xacro)/xacro --inorder $(arg model) use_nominal_extrinsics:=true publish_pointcloud:=$(arg publish_pointcloud) add_plug:=$(arg add_plug) name:=$(arg name) topics_ns:=$(arg topics_ns)" />
   <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
     <param name="publish_frequency" type="double" value="30.0" />

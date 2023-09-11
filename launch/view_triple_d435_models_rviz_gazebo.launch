@@ -1,0 +1,47 @@
+<launch>
+  <!-- arguments for the urdf xacro file, rviz visualization and namespace -->
+  <arg name="add_plug" default="false"/>
+  <arg name="publish_pointcloud" default="true"/>
+  <arg name="model" default="$(find realsense_gazebo_plugin)/urdf/triple_d435_cameras.urdf.xacro"/>
+  <arg name="urdf"  default="$(find realsense_gazebo_plugin)/urdf/triple_d435_cameras.urdf"/>
+
+  <!-- gazebo arguments -->
+  <arg name="paused" default="false"/>
+  <arg name="use_sim_time" default="true"/>
+  <arg name="gui" default="true"/>
+  <arg name="headless" default="false"/>
+  <arg name="debug" default="false"/>
+  <arg name="verbose" default="false"/>
+
+  <!-- set environment for gazebo plugin libraries, assume package under catkin_ws/src/ -->
+  <env name="LD_LIBRARY_PATH" value="$(find realsense_gazebo_plugin)/../../devel/lib:$(optenv LD_LIBRARY_PATH)"/>
+
+
+  <node name="robot_state_publisher" pkg="robot_state_publisher" type="robot_state_publisher">
+    <param name="publish_frequency" type="double" value="10.0" />
+  </node>
+
+  <!-- robot description to load in rviz or gazebo -->
+  <param name="robot_description" command="$(find xacro)/xacro $(arg model) use_nominal_extrinsics:=true publish_pointcloud:=$(arg publish_pointcloud) add_plug:=$(arg add_plug)" />
+
+  <!-- We resume the logic in empty_world.launch, changing only the name of the world to be launched -->
+  <include file="$(find gazebo_ros)/launch/empty_world.launch">
+    <arg name="debug" value="$(arg debug)" />
+    <arg name="gui" value="$(arg gui)" />
+    <arg name="paused" value="$(arg paused)"/>
+    <arg name="use_sim_time" value="$(arg use_sim_time)"/>
+    <arg name="headless" value="$(arg headless)"/>
+    <arg name="verbose" value="$(arg verbose)"/>
+  </include>
+
+  <!-- push robot_description to factory and spawn robot in gazebo -->
+  <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model triple_camera_set -param robot_description" output="screen" />
+  
+  <!-- <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
+        args="-urdf -model robot -file $(arg urdf)" output="screen" /> -->
+
+  <!-- loads rviz -->
+  <param name="use_gui" value="$(arg gui)" />
+  <node name="rviz" pkg="rviz" type="rviz" args="-d $(find realsense_gazebo_plugin)/rviz/urdf.rviz" required="true" />
+</launch>

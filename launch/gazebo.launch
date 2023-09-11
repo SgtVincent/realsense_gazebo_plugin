@@ -12,6 +12,9 @@
   <arg name="add_plug" default="false" />
   <arg name="publish_pointcloud" default="$(arg publish_pointcloud)"/>
 
+  <!-- set environment for gazebo plugin libraries, assume package under catkin_ws/src/ -->
+  <env name="LD_LIBRARY_PATH" value="$(find realsense_gazebo_plugin)/../../devel/lib:$(optenv LD_LIBRARY_PATH)"/>
+
   <!-- robot description to load in rviz or gazebo -->
   <param name="robot_description" command="$(find xacro)/xacro $(arg model) use_nominal_extrinsics:=true publish_pointcloud:=$(arg publish_pointcloud) add_plug:=$(arg add_plug) name:=$(arg name) topics_ns:=$(arg topics_ns)" />
 
@@ -26,5 +29,5 @@
 
   <!-- push robot_description to factory and spawn robot in gazebo -->
   <node name="urdf_spawner" pkg="gazebo_ros" type="spawn_model"
-        args="-z 1.0 -unpause -urdf -model robot -param robot_description" respawn="false" output="screen" />
+        args="-z 1.0 -unpause -urdf -model realsense2_camera -param robot_description" respawn="false" output="screen" />
 </launch>
