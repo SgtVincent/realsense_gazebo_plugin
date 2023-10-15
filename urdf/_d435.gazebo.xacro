@@ -33,8 +33,8 @@ This is the Gazebo URDF model for the Intel RealSense D435 camera
           <image>
             <!-- <width>640</width> -->
             <!-- <height>480</height> -->
-            <width>1280</width>
-            <height>960</height>
+            <width>1920</width>
+            <height>1080</height>
             <format>RGB_INT8</format>
           </image>
           <clip>
