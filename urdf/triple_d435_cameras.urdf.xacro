@@ -17,17 +17,17 @@
 
   <!-- left camera -->
   <xacro:sensor_d435 parent="base_link" name="camera_left" topics_ns="camera_left" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" publish_pointcloud="$(arg publish_pointcloud)">
-    <origin xyz="0.58494782 -1.48378968  1.73805654" rpy="0.0 0.45 2.1"/>
+    <origin xyz="0.6 -1.5  1.8" rpy="0.0 0.45 2.1"/>
   </xacro:sensor_d435>
 
   <!-- right camera -->
   <xacro:sensor_d435 parent="base_link" name="camera_right" topics_ns="camera_right" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" publish_pointcloud="$(arg publish_pointcloud)">
-    <origin xyz="0.58494782 1.48378968 1.73805654" rpy="0.0 0.45 -2.1"/>
+    <origin xyz="0.6 1.5 1.8" rpy="0.0 0.45 -2.1"/>
   </xacro:sensor_d435>
 
   <!-- top camera -->
   <xacro:sensor_d435 parent="base_link" name="camera_top" topics_ns="camera_top" use_nominal_extrinsics="$(arg use_nominal_extrinsics)" add_plug="$(arg add_plug)" use_mesh="$(arg use_mesh)" publish_pointcloud="$(arg publish_pointcloud)">
-    <origin xyz="-0.5 0 3.2" rpy="0 1.57 0"/>
+    <origin xyz="-0.5 0 3.4" rpy="0 1.57 0"/>
   </xacro:sensor_d435>
 
 </robot>
